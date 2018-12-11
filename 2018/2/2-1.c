@@ -4,70 +4,44 @@
 
 int main(int argc, char *argv[])
 {
+    int hits = 0;
+    int three = 0;
+    int two = 0;
+    int twos = 0;
+    int threes = 0;
 
-    char *input[250];
-
-    char str[10000];
+    char str[250];
     FILE *fp = fopen("input.txt", "r");
     if(fp == NULL) {
         return 1;
     }
-
     int i = 0;
-    while (fgets(str, 10000, fp) != NULL) {
-            input[i] = str;
-        i++;
-    }
-    fclose(fp);
-
-    int twos = 0;
-    int threes = 0;
-    int hits = 0;
-    int checksum = 0;
-    for(int j = 0; j < 250; j++) {
-        for (int k = 0; k < strlen(input[j]); k++) {
+    while (fgets(str, 250, fp) != NULL) {
+        two = 0;
+        three = 0;
+        for (int c = 0; c < strlen(str); c++) {
             hits = 0;
-            printf("J %d K %d TESTING %s", j, k, input[j]);
-            for (int l = 0; l < strlen(input[j]); l++) {
-                if (input[j][k] == '\n') {
-                    continue;
-                }
-                if (input[j][k] == input[j][l]) {
-                    printf("HIT: %c\n", input[j][k]);
+            for (int d = 0; d < strlen(str); d++) {
+                if (str[c] == str[d]) {
                     hits++;
                 }
             }
             if (hits == 2) {
-                printf("HITS %d\n", hits);
-                twos++;
+                two = 1;
             }
             if (hits == 3) {
-                printf("HITS %d\n", hits);
-                threes++;
+                three = 1;
             }
         }
-    }
-    checksum = twos * threes;
-    printf("%d\n", checksum);
-
-
-    /*
-    int l = 0;
-    int m = 0;
-    while(1) {
-        if (l == 999) {
-            l = 0;
-            m += 999;
+        if (two) {
+            twos++;
         }
-        temperature += diffs[l];
-        for (int n = 0; n < l + m; n++) {
-            if (temperature == temps[n]) {
-                printf("%d\n", temperature);
-                return 0;
-            }
+        if (three) {
+            threes++;
         }
-        temps[l + m] = temperature;
-        l++;
+        i++;
     }
-    */
+    fclose(fp);
+
+    printf("%d\n", twos * threes);
 }
